@@ -20,7 +20,8 @@ class CreateTableUser extends Migration
             $table->string('password');
             $table->string('password_reset_token')->nullable();
             $table->string('email')->unique();
-            $table->boolean('developer')->default(0);
+            $table->string('phone_number')->nullable();
+            $table->boolean('admin')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

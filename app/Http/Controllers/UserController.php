@@ -9,15 +9,11 @@ use App\AccessTokens;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-
 class UserController extends Controller
 {
-
-
     public function __construct(Request $request)
     {
         $this->middleware('auth', ['except' => ['create', 'accesstoken', 'auth']]);
-
     }
 
     public function create(Request $request)
@@ -30,14 +26,12 @@ class UserController extends Controller
 
         $model = User::create($attributes);
 
-
         $response = [
             'status' => 1,
             'data' => $model
         ];
 
         return response()->json($response, 200, [], JSON_PRETTY_PRINT);
-
     }
 
     public function me()
@@ -83,13 +77,10 @@ class UserController extends Controller
         ];
 
         return response()->json($response, 200, [], JSON_PRETTY_PRINT);
-
-
     }
 
     public function refresh(Request $request)
     {
-
         $headers = $request->headers->all();
 
         if (!$access_token = $this->refreshAccesstoken($headers['x-access-token'])) {
@@ -101,7 +92,6 @@ class UserController extends Controller
             return response()->json($response, 400, [], JSON_PRETTY_PRINT);
         }
 
-
         $data = [];
         $data['access_token'] = $access_token->token;
         $data['expires_at'] = $access_token->expires_at;
@@ -111,14 +101,11 @@ class UserController extends Controller
         ];
 
         return response()->json($response, 200, [], JSON_PRETTY_PRINT);
-
-
     }
 
     public function auth(Request $request)
     {
         $this->validate($request, User::authorizeRules());
-
 
         if ($model = User::authorize($request->all())) {
 
@@ -134,24 +121,19 @@ class UserController extends Controller
             ];
 
             return response()->json($response, 200, [], JSON_PRETTY_PRINT);
-
         } else {
-
             $response = [
                 'status' => 0,
                 'error' => "Username or Password is wrong"
             ];
 
             return response()->json($response, 400, [], JSON_PRETTY_PRINT);
-
         }
     }
 
     public function logout(Request $request)
     {
-
         $headers = $request->headers->all();
-
 
         if (!empty($headers['x-access-token'][0])) {
 
@@ -163,27 +145,20 @@ class UserController extends Controller
 
         $model = AccessTokens::where(['token' => $token])->first();
 
-
         if ($model->delete()) {
-
             $response = [
                 'status' => 1,
                 'message' => "Logged Out Successfully"
             ];
             return response()->json($response, 200, [], JSON_PRETTY_PRINT);
-
-
         } else {
             $response = [
                 'status' => 0,
                 'message' => "Invalid request"
             ];
             return response()->json($response, 400, [], JSON_PRETTY_PRINT);
-
         }
-
     }
-
 
     public function view($id)
     {
@@ -193,7 +168,6 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
-
         $model = $this->findModel($id);
         $this->validate($request, User::rules($id));
 
@@ -222,12 +196,10 @@ class UserController extends Controller
     {
         $response = User::search($request);
         return response()->json($response, 200, [], JSON_PRETTY_PRINT);
-
     }
 
     public function findModel($id)
     {
-
         $model = User::find($id);
         if (!$model) {
             $response = [
@@ -243,7 +215,6 @@ class UserController extends Controller
 
     public function validate(Request $request, array $rules, array $messages = [], array $customAttributes = [])
     {
-
         $validator = $this->getValidationFactory()->make($request->all(), $rules, $messages, $customAttributes);
 
         if ($validator->fails()) {
@@ -254,7 +225,6 @@ class UserController extends Controller
 
             response()->json($response, 400, [], JSON_PRETTY_PRINT)->send();
             die();
-
         }
 
         return true;
@@ -284,12 +254,10 @@ class UserController extends Controller
         $model->save();
 
         return ($model);
-
     }
 
     public function createAccesstoken($authorization_code)
     {
-
         $auth_code = AuthorizationCodes::where(['code' => $authorization_code])->first();
 
         $model = new AccessTokens();
@@ -311,7 +279,6 @@ class UserController extends Controller
         $model->save();
 
         return ($model);
-
     }
 
     public function refreshAccesstoken($token)

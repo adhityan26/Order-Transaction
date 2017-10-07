@@ -16,7 +16,7 @@ $router->get('/', function () use ($router) {
     //return $router->app->version();
     $response = [
         'status' => 1,
-        'data' => "Laravel 5.5.* Lumen 5.5.0 RESTful API with OAuth2"
+        'data' => "Order Transaction Rest API v.1"
     ];
 
     return response()->json($response, 200, [], JSON_PRETTY_PRINT);
@@ -24,7 +24,7 @@ $router->get('/', function () use ($router) {
 
 //'namespace' => 'App\Http\Controllers'
 //e5e7a35ac033ecb7508588f9197f68ed
-$router->group(['prefix' => 'v1'], function($app)
+$router->group(['prefix' => 'oAuth/v1'], function($app)
 {
     $app->post('register','UserController@create');
 
@@ -45,17 +45,4 @@ $router->group(['prefix' => 'v1'], function($app)
     $app->delete('users/{id}','UserController@deleteRecord');
 
     $app->get('users','UserController@index');
-
-
-    $app->post('employees','EmployeesController@create');
-
-    $app->put('employees/{id}','EmployeesController@update');
-
-    $app->get('employees/{id}','EmployeesController@view');
-
-    $app->delete('employees/{id}','EmployeesController@deleteRecord');
-
-    $app->get('employees','EmployeesController@index');
-
-
 });
