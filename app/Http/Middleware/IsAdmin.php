@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\Auth\Factory as Auth;
 
 
-class Authenticate
+class IsAdmin
 {
     /**
      * The authentication guard factory instance.
@@ -36,10 +36,9 @@ class Authenticate
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if ($this->auth->guard($guard)->guest()) {
+        if (!$this->auth->user()->admin) {
             return response('Unauthorized.', 401);
         }
-
 
         return $next($request);
     }

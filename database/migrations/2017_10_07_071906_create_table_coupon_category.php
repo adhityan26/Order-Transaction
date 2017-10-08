@@ -16,6 +16,8 @@ class CreateTableCouponCategory extends Migration
         Schema::create('coupon_categories', function (Blueprint $table) {
             $table->integer("coupon_id");
             $table->integer("category_id");
+
+            $table->unique(["coupon_id", "category_id"]);
         });
     }
 
