@@ -13,7 +13,7 @@ class CreateTableShippingCost extends Migration
      */
     public function up()
     {
-        Schema::create('shipping_cost', function (Blueprint $table) {
+        Schema::create('shipping_costs', function (Blueprint $table) {
             $table->increments("id");
             $table->integer("shipping_package_id");
             $table->integer("shipping_origin_province");
@@ -36,6 +36,6 @@ class CreateTableShippingCost extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('shipping_cost');
+        Schema::dropIfExists('shipping_costs');
     }
 }

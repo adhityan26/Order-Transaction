@@ -2,45 +2,39 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class BaseModel extends Model
 {
-    protected $fillable = ['sku', 'name', 'price', 'qty', 'desc'];
-
-    public static function getProductList($page = 1, $perPage = 10, $params = []) {
+    public static function getList($params = [], $page = 1, $perPage = 10, $searchColumn = []) {
         $model = self::query();
 
-        foreach ($params as $key => $param) {
-            $model->where($key, $param);
+        foreach ($searchColumn as $col) {
+            if (isset($params[$col])) {
+                $model->where($col, $params[$col]);
+            }
         }
 
         return $model->paginate($perPage, ['*'], "page", $page);
     }
 
-    public static function createProduct($product) {
+    public static function createData($data) {
         $model = self::query();
-        return $model->create($product);
+        return $model->create($data);
     }
 
-    public static function updateProduct($id, $product) {
-        $model = self::query();
-        $model->find($id);
-        return $model->update($product);
-    }
-
-    public static function updateQty($id, $qty) {
+    public static function updateData($id, $data) {
         $model = self::find($id);
-        $product = $model->get();
-        if (count($product) > 0) {
-            $product = $product[0];
-            $qty = $product->qty + $qty;
-            if ($qty > 0) {
-                return $model->update(["qty" => $qty]);
-            } else {
-                throw new \Exception("Quantity should not less than 0");
-            }
-        } else {
-            throw new \Exception("Product not found");
-        }
+        return $model->update($data);
+    }
+
+    public static function removeData($id) {
+        $model = self::find($id);
+        return $model->delete();
+    }
+
+    public static function changeStatus($id) {
+        $model = self::find($id);
+        $model->status = !$model->status;
+        return $model->save();
     }
 }
 ?>
