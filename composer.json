@@ -7,10 +7,9 @@
     "require": {
         "php": ">=7.0",
         "laravel/lumen-framework": "5.5.*",
-        "vlucas/phpdotenv": "~2.2",
-        "dingo/api": "1.0.*dev",
         "darkaonline/swagger-lume": "5.5.*",
-        "lucadegasperi/oauth2-server-laravel": "5.1.*"
+        "vlucas/phpdotenv": "~2.2",
+        "doctrine/dbal": "2.6.*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
