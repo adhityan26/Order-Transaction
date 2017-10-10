@@ -1,7 +1,7 @@
 <?php namespace App\Model;
 
-class ShippingCost extends BaseModel
+class ShippingVendor extends BaseModel
 {
-    protected $fillable = [];
+    protected $fillable = ['name', 'track_url', 'address', 'phone_number', 'notes', 'status'];
 }
 ?>

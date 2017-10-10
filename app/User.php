@@ -45,7 +45,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $fillable = [
-        'username', 'email','password','name',
+        'username', 'email', 'password', 'name', 'admin', 'phone_number'
     ];
 
     /**
@@ -76,7 +76,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
         $offset = ($page - 1) * $limit;
 
-        $query = User::select(['id', 'username', 'email', 'created_at', 'updated_at'])
+        $query = User::select(['id', 'username', 'email', 'name', 'phone_number', 'admin', 'created_at', 'updated_at'])
             ->limit($limit)
             ->offset($offset);
 

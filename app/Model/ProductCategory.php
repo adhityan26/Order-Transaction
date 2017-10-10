@@ -1,23 +1,18 @@
 <?php namespace App\Model;
 
-class Product extends BaseModel
+class ProductCategory extends BaseModel
 {
-    protected $fillable = ['sku', 'name', 'price', 'qty', 'desc', 'status'];
+    protected $fillable = ['product_id', 'category_id'];
+    public $timestamps = false;
 
-    public static function updateQty($id, $qty) {
-        $model = self::find($id);
-        $product = $model->get();
-        if (count($product) > 0) {
-            $product = $product[0];
-            $qty = $product->qty + $qty;
-            if ($qty > 0) {
-                return $model->update(["qty" => $qty]);
-            } else {
-                throw new \Exception("Quantity should not less than 0");
-            }
-        } else {
-            throw new \Exception("Product not found");
-        }
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
     }
 }
 ?>

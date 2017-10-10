@@ -1,43 +1,61 @@
 <?php namespace App\Model;
 
-use Illuminate\Support\Facades\Auth;
+use App\Exceptions\AppException;
+use Carbon\Carbon;
 
-class Product extends BaseModel
+class Coupon extends BaseModel
 {
-    protected $fillable = ['sku', 'name', 'price', 'qty', 'desc', 'status'];
+    protected $fillable = ['code', 'name', 'desc', 'valid_from', 'valid_to', 'coupon_value', 'coupon_percentage', 'limit', 'limit_terms'];
 
-    public function productCategories()
-    {
-        return $this->hasMany(ProductCategory::class);
-    }
+    public static function calculateCoupon($user, $coupon_code) {
+        $coupon = self::query();
+        $coupon->where("code", $coupon_code);
 
-    public static function getList($params = [], $page = 1, $perPage = 10, $searchColumn = []) {
-        $model = self::query();
+        $coupon = $coupon->first();
 
-        foreach ($searchColumn as $col) {
-            if (isset($params[$col])) {
-                $model->where($col, $params[$col]);
+        if ($coupon) {
+            $cart_item = Cart::query();
+            $cart_item->where("user_id", $user->id);
+
+            if ($cart_item->count() == 0) {
+                throw new AppException("No item found on cart");
             }
-        }
 
-        $model->with("productCategories.category");
+            $now = Carbon::now();
+            $valid_from = new \Carbon\Carbon($coupon->valid_from);
+            $valid_to = new \Carbon\Carbon($coupon->valid_to);
+            $valid_to->setTime(23, 59, 59);
 
-        return $model->paginate($perPage, ['*'], "page", $page);
-    }
+            if ($now->between($valid_from, $valid_to)) {
+                if ($coupon->limit > 0) {
+                    $orderCoupon = Order::where("coupon_id", $coupon->id)->count();
+                    if ($orderCoupon > $coupon->limit) {
+                        throw new AppException("Coupon is exceeding limit");
+                    }
+                }
+                $cart_item->where("user_id", $user->id);
 
-    public static function updateQty($id, $qty) {
-        $model = self::find($id);
-        $product = $model->get();
-        if (count($product) > 0) {
-            $product = $product[0];
-            $qty = $product->qty + $qty;
-            if ($qty > 0) {
-                return $model->update(["qty" => $qty]);
+                $totalItem = $cart_item->sum("sub_total");
+                $discountValue = 0;
+
+                if ($coupon->coupon_percentage > 0) {
+                    $discountValue = round($totalItem * $coupon->coupon_percentage / 100, PHP_ROUND_HALF_DOWN);
+                    if ($coupon->coupon_value > 0 && $coupon->coupon_value < $discountValue) {
+                        $discountValue = intval($coupon->coupon_value);
+                    }
+                }
+
+                return [
+                    "id" => $coupon->id,
+                    "code" => $coupon->code,
+                    "name" => $coupon->name,
+                    "value" => $discountValue
+                ];
             } else {
-                throw new \Exception("Quantity should not less than 0");
+                throw new AppException("Coupon is expired");
             }
         } else {
-            throw new \Exception("Product not found");
+            throw new AppException("Coupon not found");
         }
     }
 }

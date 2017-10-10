@@ -3,65 +3,56 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Model\Cart;
 use App\Model\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class ProductController extends Controller
+class CartController extends Controller
 {
     /**
      * Create a new controller instance.
-     *
-     * @return void
      */
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['index', 'show']]);
-        $this->middleware('admin', ['only' => ['store', 'update', 'updateQty']]);
+        $this->middleware('auth');
     }
 
     public function index(Request $request) {
         $limit = $request->input("limit", 10);
         $page = $request->input("page", 1);
-        $param = $request->only(["sku", "name"]);
-        $product = Product::getList($request->all(), $page, $limit, $param);
-        return response()->json($product);
+        $param = $request->only(["user_id", "product_id"]);
+        $user = Auth::user();
+
+        if ($user->admin != 1) {
+            $param["user_id"] = $user->id;
+        }
+        $cart = Cart::getList($param, $page, $limit, ["user_id", "product_id"]);
+        return response()->json($cart);
     }
 
     public function store(Request $req) {
         $this->validate($req, [
-            "sku" => "required|unique:products,sku",
-            "name" => "required",
-            "price" => "required|integer",
+            "product_id" => "required|exists:products,id",
             "qty" => "required|integer",
         ]);
 
-        $param = $req->only(["sku", "name", "price", "qty", "desc", "status"]);
-        $product = Product::createData($param);
-        return response()->json($product);
+        $param = $req->only(["product_id", "qty"]);
+        $user = Auth::user();
+
+        $param["user_id"] = $user->id;
+
+        $cart = Cart::createData($param);
+        return response()->json($cart);
     }
 
-    public function update(Request $req, $id) {
-        $this->validate($req, [
-            "name" => "required",
-            "price" => "required|integer",
-            "qty" => "required|integer",
-        ]);
-
-        $param = $req->only(["name", "price", "qty", "desc", "status"]);
-        $product = Product::updateData($id, $param);
-        return response()->json($product);
-    }
-
-    public function updateQty(Request $req, $id) {
-        $this->validate($req, [
-            "qty" => "required|integer",
-        ]);
-        $product = Product::updateQty($id, $req->input("qty"));
-        return response()->json($product);
+    public function remove(Request $req, $id) {
+        $cart = Cart::removeData($id);
+        return response()->json($cart);
     }
 
     public function show(Request $req, $id) {
-        $product = Product::find($id);
-        return response()->json($product);
+        $cart = Cart::find($id);
+        return response()->json($cart);
     }
 }

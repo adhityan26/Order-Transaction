@@ -1,12 +1,14 @@
 <?php namespace App\Model;
 
-class Product extends BaseModel
-{
-    protected $fillable = ['sku', 'name', 'price', 'qty', 'desc', 'status'];
+use App\Exceptions\AppException;
 
-    public function productCategories()
+class Cart extends BaseModel
+{
+    protected $fillable = ['user_id', 'product_id', 'price', 'qty', 'sub_total'];
+
+    public function products()
     {
-        return $this->hasMany(ProductCategory::class);
+        return $this->belongsTo(Product::class, 'product_id', 'id');
     }
 
     public static function getList($params = [], $page = 1, $perPage = 10, $searchColumn = []) {
@@ -18,25 +20,32 @@ class Product extends BaseModel
             }
         }
 
-        $model->with("productCategories.category");
+        $model->with("products");
 
         return $model->paginate($perPage, ['*'], "page", $page);
     }
 
-    public static function updateQty($id, $qty) {
-        $model = self::find($id);
-        $product = $model->get();
-        if (count($product) > 0) {
-            $product = $product[0];
-            $qty = $product->qty + $qty;
-            if ($qty > 0) {
-                return $model->update(["qty" => $qty]);
-            } else {
-                throw new \Exception("Quantity should not less than 0");
-            }
-        } else {
-            throw new \Exception("Product not found");
+    public static function createData($data) {
+        $product = Product::find($data["product_id"]);
+        if (!$product) {
+            throw new AppException("Product not found");
+        } else if ($product->qty - intval($data["qty"]) < 0) {
+            throw new AppException("Insufficient quantity");
+        } else if ($product->status == 0) {
+            throw new AppException("Product is not active");
         }
+
+        $model = self::query();
+
+        if($model->where("user_id", $data["user_id"])->where("product_id", $data["product_id"])->count() > 0) {
+            $data["price"] = $product->price;
+            $data["sub_total"] = $product->price * intval($data["qty"]);
+            return $model->update($data);
+        }
+
+        $data["price"] = $product->price;
+        $data["sub_total"] = $product->price * intval($data["qty"]);
+        return $model->create($data);
     }
 }
 ?>

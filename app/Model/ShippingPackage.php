@@ -1,7 +1,11 @@
 <?php namespace App\Model;
 
-class ShippingCost extends BaseModel
+class ShippingPackage extends BaseModel
 {
-    protected $fillable = [];
+    protected $fillable = ['shipping_vendor_id', 'code', 'description', 'status'];
+
+    public function shippingVendor() {
+        $this->belongsTo(ShippingVendor::class);
+    }
 }
 ?>

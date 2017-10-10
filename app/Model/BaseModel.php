@@ -23,7 +23,8 @@ class BaseModel extends Model
 
     public static function updateData($id, $data) {
         $model = self::find($id);
-        return $model->update($data);
+        $model->update($data);
+        return $model;
     }
 
     public static function removeData($id) {
@@ -34,6 +35,7 @@ class BaseModel extends Model
     public static function changeStatus($id) {
         $model = self::find($id);
         $model->status = !$model->status;
+        $model->save();
         return $model->save();
     }
 }

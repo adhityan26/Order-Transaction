@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers\api;
 
+use App\Constant\Status;
 use App\Http\Controllers\Controller;
+use App\Model\Payment;
 use App\Model\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 
-class ProductController extends Controller
+class PaymentController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -15,58 +19,58 @@ class ProductController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['index', 'show']]);
-        $this->middleware('admin', ['only' => ['store', 'update', 'updateQty']]);
+        $this->middleware('auth');
+        $this->middleware('admin', ['only' => ['confirmPayment', 'rejectPayment', 'cancelPayment']]);
     }
 
     public function index(Request $request) {
         $limit = $request->input("limit", 10);
         $page = $request->input("page", 1);
-        $param = $request->only(["sku", "name"]);
-        $product = Product::getList($request->all(), $page, $limit, $param);
-        return response()->json($product);
+        $param = $request->only(["payment_date", "user_id", "user_account", "user_bank_account", "status", "order_id"]);
+        $user = Auth::user();
+
+        if (!$user->admin) {
+            $param["user_id"] = $user->id;
+        }
+
+        $payment = Payment::getList($param, $page, $limit, ["payment_date", "user_id", "user_account", "user_bank_account", "status", "order_id"]);
+        return response()->json($payment);
     }
 
     public function store(Request $req) {
         $this->validate($req, [
-            "sku" => "required|unique:products,sku",
-            "name" => "required",
-            "price" => "required|integer",
-            "qty" => "required|integer",
+            "order_id" => "required|exists:orders,id",
+//            "total_payment" => "required|integer",
+            "user_account" => "required",
+            "user_bank_account" => "required",
         ]);
 
-        $param = $req->only(["sku", "name", "price", "qty", "desc", "status"]);
-        $product = Product::createData($param);
-        return response()->json($product);
+        $param = $req->only(["order_id", "reference_no", "user_account", "user_bank_account", "notes"]);
+        $param["status"] = Status::NEW;
+        $param["total_payment"] = 0;
+        $user = Auth::user();
+
+        $payment = Payment::createPayment($user, $param);
+        return response()->json($payment);
     }
 
-    public function update(Request $req, $id) {
-        $this->validate($req, [
-            "name" => "required",
-            "price" => "required|integer",
-            "qty" => "required|integer",
-        ]);
-
-        $param = $req->only(["name", "price", "qty", "desc", "status"]);
-        $product = Product::updateData($id, $param);
-        return response()->json($product);
+    public function confirmPayment(Request $req, $id) {
+        $payment = Payment::changePaymentStatus($id, Status::CONFIRMED);
+        return response()->json($payment);
     }
 
-    public function updateQty(Request $req, $id) {
-        $this->validate($req, [
-            "qty" => "required|integer",
-        ]);
-        $product = Product::updateQty($id, $req->input("qty"));
-        return response()->json($product);
+    public function rejectPayment(Request $req, $id) {
+        $payment = Payment::changePaymentStatus($id, Status::REJECTED);
+        return response()->json($payment);
     }
 
-    public function changeStatus(Request $req, $id) {
-        $product = Product::changeStatus($id);
-        return response()->json($product);
+    public function cancelPayment(Request $req, $id) {
+        $payment = Payment::changePaymentStatus($id, Status::CANCELED);
+        return response()->json($payment);
     }
 
     public function show(Request $req, $id) {
-        $product = Product::find($id);
-        return response()->json($product);
+        $payment = Payment::find($id);
+        return response()->json($payment);
     }
 }

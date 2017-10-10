@@ -1,28 +1,28 @@
 <?php namespace App\Model;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Exceptions\AppException;
 
-class Product extends Model
+class Product extends BaseModel
 {
-    protected $fillable = ['code', 'expires_at','user_id','app_id'];
-    static public function rules($id=NULL)
+    protected $fillable = ['sku', 'name', 'price', 'qty', 'desc', 'status'];
+
+    public function productCategories()
     {
-        return [
-            'user_id' => 'required',
-            'code' => 'required|unique:authorization_codes,code,'.$id,
-        ];
+        return $this->hasMany(ProductCategory::class);
     }
 
-    public static function isValid($code)
-    {
-        $model=AuthorizationCodes::where(['code'=>$code])->first();
+    public static function getList($params = [], $page = 1, $perPage = 10, $searchColumn = []) {
+        $model = self::query();
 
-        if(!$model||$model->expires_at<time())
-        {
-            return(false);
+        foreach ($searchColumn as $col) {
+            if (isset($params[$col])) {
+                $model->where($col, $params[$col]);
+            }
         }
-        else
-            return($model);
+
+        $model->with("productCategories.category");
+
+        return $model->paginate($perPage, ['*'], "page", $page);
     }
 }
 ?>

@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\api;
 
+use App\Constant\Status;
 use App\Http\Controllers\Controller;
+use App\Model\Order;
 use App\Model\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class ProductController extends Controller
+class OrderController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -14,54 +17,84 @@ class ProductController extends Controller
      * @return void
      */
     public function __construct()
-    {
-        $this->middleware('auth', ['except' => ['index', 'show']]);
-        $this->middleware('admin', ['only' => ['store', 'update', 'updateQty']]);
+    {$this->middleware('auth');
+        $this->middleware('admin', ['only' => ['confirmDelivery', 'confirmOrder', 'rejectOrder', 'cancelOrder', 'remove']]);
     }
 
     public function index(Request $request) {
         $limit = $request->input("limit", 10);
         $page = $request->input("page", 1);
-        $param = $request->only(["sku", "name"]);
-        $product = Product::getList($request->all(), $page, $limit, $param);
-        return response()->json($product);
+        $param = $request->only(["order_number", "email", "phone_number", "user_id", "status", "tracking_no"]);
+        $user = Auth::user();
+
+        if (!$user->admin) {
+            $param["user_id"] = $user->id;
+        }
+
+        $order = Order::getList($param, $page, $limit, ["order_number", "email", "phone_number", "user_id", "status", "tracking_no"]);
+        return response()->json($order);
     }
 
     public function store(Request $req) {
         $this->validate($req, [
-            "sku" => "required|unique:products,sku",
-            "name" => "required",
-            "price" => "required|integer",
-            "qty" => "required|integer",
+            "shipping_method" => "required|exists:shipping_costs,id",
+            "address" => "required",
         ]);
 
-        $param = $req->only(["sku", "name", "price", "qty", "desc", "status"]);
-        $product = Product::createData($param);
-        return response()->json($product);
-    }
+        $param = $req->only(["name", "email", "phone_number", "address", "shipping_method", "coupon_code"]);
+        $user = Auth::user();
+        $param["user_id"] = $user->id;
 
-    public function update(Request $req, $id) {
-        $this->validate($req, [
-            "name" => "required",
-            "price" => "required|integer",
-            "qty" => "required|integer",
-        ]);
+        if (empty($param["name"])) {
+            $param["name"] = $user->name;
+        }
 
-        $param = $req->only(["name", "price", "qty", "desc", "status"]);
-        $product = Product::updateData($id, $param);
-        return response()->json($product);
-    }
+        if (empty($param["email"])) {
+            $param["email"] = $user->email;
+        }
 
-    public function updateQty(Request $req, $id) {
-        $this->validate($req, [
-            "qty" => "required|integer",
-        ]);
-        $product = Product::updateQty($id, $req->input("qty"));
-        return response()->json($product);
+        if (empty($param["phone_number"])) {
+            $param["phone_number"] = $user->phone_number;
+        }
+
+        $param["status"] = Status::NEW;
+
+        $order = Order::createOrder($user, $param);
+        return response()->json($order);
     }
 
     public function show(Request $req, $id) {
-        $product = Product::find($id);
-        return response()->json($product);
+        $order = Order::find($id);
+        return response()->json($order);
+    }
+
+    public function confirmOrder(Request $req, $id) {
+        $order = Order::changeOrderStatus($id, Status::CONFIRMED);
+        return response()->json($order);
+    }
+
+    public function rejectOrder(Request $req, $id) {
+        $order = Order::changeOrderStatus($id, Status::REJECTED);
+        return response()->json($order);
+    }
+
+    public function cancelOrder(Request $req, $id) {
+        $order = Order::changeOrderStatus($id, Status::CANCELED);
+        return response()->json($order);
+    }
+
+    public function shipOrder(Request $req, $id) {
+        $this->validate($req, [
+            "awb" => "required"
+        ]);
+
+        $awb = $req->input("awb");
+        $order = Order::changeOrderStatus($id, Status::SHIPPED, $awb);
+        return response()->json($order);
+    }
+
+    public function confirmDeliveryOrder(Request $req, $id) {
+        $order = Order::changeOrderStatus($id, Status::DELIVERED);
+        return response()->json($order);
     }
 }

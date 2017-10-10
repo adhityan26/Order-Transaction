@@ -1,13 +1,11 @@
 <?php namespace App\Model;
 
-class Payment extends BaseModel
+class ShippingCost extends BaseModel
 {
-    protected $fillable = ['order_id', 'user_id', 'status', 'reference_no', 'user_account', 'user_bank_account', 'notes'];
+    protected $fillable = ['shipping_package_id', 'shipping_origin_province', 'shipping_origin_city', 'shipping_origin_district', 'shipping_destination_province', 'shipping_destination_city', 'shipping_destination_district', 'shipping_etd', 'cost', 'status'];
 
-    public static function changeStatus($id, $status) {
-        $model = self::find($id);
-        $model->status = $status;
-        return $model->save();
+    public function shippingPackage() {
+        return $this->belongsTo(ShippingPackage::class, "shipping_package_id", "id");
     }
 }
 ?>
