@@ -5,7 +5,7 @@ class ShippingPackage extends BaseModel
     protected $fillable = ['shipping_vendor_id', 'code', 'description', 'status'];
 
     public function shippingVendor() {
-        $this->belongsTo(ShippingVendor::class);
+        $this->belongsTo(ShippingVendor::class, "shipping_vendor_id", "id");
     }
 }
 ?>

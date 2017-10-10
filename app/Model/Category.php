@@ -29,23 +29,23 @@ class Category extends BaseModel
         return $this->subCategories()->with('allSubCategories');
     }
 
-    public static function getList($params = [], $page = 1, $perPage = 10, $searchColumn = []) {
-        $model = self::query();
-
-        foreach ($searchColumn as $col) {
-            if (isset($params[$col])) {
-                $model->where($col, $params[$col]);
-            }
-        }
-
-        $model->with("categoryProducts.product");
-
-        return $model->paginate($perPage, ['*'], "page", $page);
-    }
+//    public static function getList($params = [], $page = 1, $perPage = 10, $searchColumn = []) {
+//        $model = self::query();
+//
+//        foreach ($searchColumn as $col) {
+//            if (isset($params[$col])) {
+//                $model->where($col, $params[$col]);
+//            }
+//        }
+//
+//        $model->with("categoryProducts.product");
+//
+//        return $model->paginate($perPage, ['*'], "page", $page);
+//    }
 
     public static function getDetail($id) {
         $category = self::query();
-        $category->with(["allParentCategories", "allSubCategories"]);
+        $category->with(["allParentCategories", "allSubCategories", "categoryProducts.product"]);
         $category = $category->find($id);
         return $category;
     }

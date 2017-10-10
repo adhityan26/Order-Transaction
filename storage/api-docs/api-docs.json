@@ -1,0 +1,2412 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Order Transaction API",
+        "version": "1.0"
+    },
+    "host": "",
+    "basePath": "/api/v1",
+    "paths": {
+        "/cart": {
+            "get": {
+                "tags": [
+                    "/cart"
+                ],
+                "summary": "List Cart",
+                "description": "List Cart",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "query",
+                        "description": "User ID cart owner",
+                        "required": false,
+                        "type": "number"
+                    },
+                    {
+                        "name": "product_id",
+                        "in": "query",
+                        "description": "Product exist on cart",
+                        "required": false,
+                        "type": "number"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit data",
+                        "required": true,
+                        "type": "number",
+                        "default": 10
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Limit data",
+                        "required": true,
+                        "type": "number",
+                        "default": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "/cart"
+                ],
+                "summary": "Create/update cart",
+                "description": "Create new Cart",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "product_id",
+                        "in": "formData",
+                        "description": "Product ID",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "qty",
+                        "in": "formData",
+                        "description": "Product quantity",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            }
+        },
+        "/cart/{id}": {
+            "get": {
+                "tags": [
+                    "/cart"
+                ],
+                "summary": "View Cart detail",
+                "description": "View Cart detail",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Cart ID",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "/cart"
+                ],
+                "summary": "Delete existing Cart",
+                "description": "Delete existing Cart",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Cart ID",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            }
+        },
+        "/category": {
+            "get": {
+                "tags": [
+                    "/category"
+                ],
+                "summary": "List Category",
+                "description": "List Category",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Category Name",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit data",
+                        "required": true,
+                        "type": "number",
+                        "default": 10
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Limit data",
+                        "required": true,
+                        "type": "number",
+                        "default": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "/category"
+                ],
+                "summary": "Create new Category",
+                "description": "Create new Category",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "parent",
+                        "in": "formData",
+                        "description": "Parent Category",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "name",
+                        "in": "formData",
+                        "description": "Category Name",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            }
+        },
+        "/category/{id}": {
+            "get": {
+                "tags": [
+                    "/category"
+                ],
+                "summary": "View Category detail",
+                "description": "View Category detail",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Category ID",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "/category"
+                ],
+                "summary": "Update existing Category",
+                "description": "Update existing Category",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Category ID",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "parent",
+                        "in": "formData",
+                        "description": "Parent Category",
+                        "required": false,
+                        "type": "number"
+                    },
+                    {
+                        "name": "name",
+                        "in": "formData",
+                        "description": "Category Name",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "/category"
+                ],
+                "summary": "Delete existing Category",
+                "description": "Delete existing Category",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Category ID",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            }
+        },
+        "/category/{id}/status": {
+            "get": {
+                "tags": [
+                    "/category"
+                ],
+                "summary": "Change Category Status",
+                "description": "Change Category status",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Category ID",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            }
+        },
+        "/category/mapCategoryProduct": {
+            "put": {
+                "tags": [
+                    "/category"
+                ],
+                "summary": "Map Category Product",
+                "description": "Map Category Product",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "product_id",
+                        "in": "formData",
+                        "description": "Product ID",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "category_id",
+                        "in": "formData",
+                        "description": "Product ID",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            }
+        },
+        "/coupon": {
+            "get": {
+                "tags": [
+                    "/coupon"
+                ],
+                "summary": "List Coupon",
+                "description": "List coupon",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "code",
+                        "in": "query",
+                        "description": "Coupon Code",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Coupon Name",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit data",
+                        "required": true,
+                        "type": "number",
+                        "default": 10
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Limit data",
+                        "required": true,
+                        "type": "number",
+                        "default": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "/coupon"
+                ],
+                "summary": "Create new Coupon",
+                "description": "Create new Coupon",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "code",
+                        "in": "formData",
+                        "description": "Coupon Code",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "formData",
+                        "description": "Coupon Name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "valid_from",
+                        "in": "formData",
+                        "description": "Coupon Valid From (YYYY/MM/DD)",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "valid_to",
+                        "in": "formData",
+                        "description": "Coupon Valid To (YYYY/MM/DD)",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "coupon_value",
+                        "in": "formData",
+                        "description": "Coupon Value",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "coupon_percentage",
+                        "in": "formData",
+                        "description": "Coupon Percentage (in %)",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "formData",
+                        "description": "Coupon limit (0 mean unlimited)",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            }
+        },
+        "/coupon/{id}": {
+            "get": {
+                "tags": [
+                    "/coupon"
+                ],
+                "summary": "View Coupon detail",
+                "description": "View Coupon detail",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Coupon ID",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "/coupon"
+                ],
+                "summary": "Update existing Coupon",
+                "description": "Update existing Coupon",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Coupon ID",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "name",
+                        "in": "formData",
+                        "description": "Coupon Name",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "valid_from",
+                        "in": "formData",
+                        "description": "Coupon Valid From (YYYY/MM/DD)",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "valid_to",
+                        "in": "formData",
+                        "description": "Coupon Valid To (YYYY/MM/DD)",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "coupon_value",
+                        "in": "formData",
+                        "description": "Coupon Value",
+                        "required": false,
+                        "type": "number"
+                    },
+                    {
+                        "name": "coupon_percentage",
+                        "in": "formData",
+                        "description": "Coupon Percentage (in %)",
+                        "required": false,
+                        "type": "number"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "formData",
+                        "description": "Coupon limit (0 mean unlimited)",
+                        "required": false,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "/coupon"
+                ],
+                "summary": "Delete existing Coupon",
+                "description": "Delete existing Coupon",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Coupon ID",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            }
+        },
+        "/coupon/{id}/status": {
+            "get": {
+                "tags": [
+                    "/coupon"
+                ],
+                "summary": "Change Coupon Status",
+                "description": "Change Coupon status",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Coupon ID",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            }
+        },
+        "/coupon/preview/{coupon_code}": {
+            "get": {
+                "tags": [
+                    "/coupon"
+                ],
+                "summary": "Preview Coupon detail by product in cart",
+                "description": "Preview Coupon detail by product in cart",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "coupon_code",
+                        "in": "path",
+                        "description": "Coupon Code",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            }
+        },
+        "/order": {
+            "get": {
+                "tags": [
+                    "/order"
+                ],
+                "summary": "List Order",
+                "description": "List Order",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "order_number",
+                        "in": "query",
+                        "description": "User ID cart owner",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Product exist on cart",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "phone_number",
+                        "in": "query",
+                        "description": "Product exist on cart",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "query",
+                        "description": "Product exist on cart",
+                        "required": false,
+                        "type": "number"
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "Product exist on cart",
+                        "required": false,
+                        "type": "number"
+                    },
+                    {
+                        "name": "tracking_no",
+                        "in": "query",
+                        "description": "Product exist on cart",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "coupon_code",
+                        "in": "query",
+                        "description": "Product exist on cart",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit data",
+                        "required": true,
+                        "type": "number",
+                        "default": 10
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Limit data",
+                        "required": true,
+                        "type": "number",
+                        "default": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "/order"
+                ],
+                "summary": "Create new Order",
+                "description": "Create new Order",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "formData",
+                        "description": "Coupon Name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "email",
+                        "in": "formData",
+                        "description": "Coupon Name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "phone_number",
+                        "in": "formData",
+                        "description": "Coupon Name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "address",
+                        "in": "formData",
+                        "description": "Coupon Name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "shipping_method",
+                        "in": "formData",
+                        "description": "Coupon Name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "coupon_code",
+                        "in": "formData",
+                        "description": "Coupon Name",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            }
+        },
+        "/order/{id}": {
+            "get": {
+                "tags": [
+                    "/order"
+                ],
+                "summary": "View Order detail",
+                "description": "View Order detail",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Order ID",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            }
+        },
+        "/order/{id}/confirm": {
+            "get": {
+                "tags": [
+                    "/order"
+                ],
+                "summary": "Confirm Order",
+                "description": "Confirm Order",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Order ID",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            }
+        },
+        "/order/{id}/reject": {
+            "get": {
+                "tags": [
+                    "/order"
+                ],
+                "summary": "Reject Order",
+                "description": "Reject Order",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Order ID",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            }
+        },
+        "/order/{id}/cancel": {
+            "get": {
+                "tags": [
+                    "/order"
+                ],
+                "summary": "Cancel Order",
+                "description": "Cancel Order",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Order ID",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            }
+        },
+        "/order/{id}/ship": {
+            "get": {
+                "tags": [
+                    "/order"
+                ],
+                "summary": "Ship Order",
+                "description": "Ship Order",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Order ID",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "awb",
+                        "in": "query",
+                        "description": "Tracking Number",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            }
+        },
+        "/order/{id}/delivered": {
+            "get": {
+                "tags": [
+                    "/order"
+                ],
+                "summary": "Confirm Delivery Order",
+                "description": "Cancel Order",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Order ID",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            }
+        },
+        "/payment": {
+            "get": {
+                "tags": [
+                    "/payment"
+                ],
+                "summary": "List Payment",
+                "description": "List Payment",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "payment_date",
+                        "in": "query",
+                        "description": "Date of payment",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "query",
+                        "description": "Order User ID",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "user_account",
+                        "in": "query",
+                        "description": "Sender Bank User Account",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "user_bank_account",
+                        "in": "query",
+                        "description": "Sender Bank Name",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order_id",
+                        "in": "query",
+                        "description": "Order ID",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit data",
+                        "required": true,
+                        "type": "number",
+                        "default": 10
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Limit data",
+                        "required": true,
+                        "type": "number",
+                        "default": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "/payment"
+                ],
+                "summary": "Create new Payment",
+                "description": "Create new Payment",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "order_id",
+                        "in": "formData",
+                        "description": "Order ID",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "user_account",
+                        "in": "formData",
+                        "description": "Sender Bank User Account",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "user_bank_account",
+                        "in": "formData",
+                        "description": "Sender Bank Name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "reference_no",
+                        "in": "formData",
+                        "description": "Reference No",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "notes",
+                        "in": "formData",
+                        "description": "Notes",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            }
+        },
+        "/payment/{id}/confirm": {
+            "get": {
+                "tags": [
+                    "/order"
+                ],
+                "summary": "Confirm Payment",
+                "description": "Confirm Payment",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Payment ID",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            }
+        },
+        "/payment/{id}/reject": {
+            "get": {
+                "tags": [
+                    "/payment"
+                ],
+                "summary": "Reject Payment",
+                "description": "Reject Payment",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "payment ID",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            }
+        },
+        "/payment/{id}/cancel": {
+            "get": {
+                "tags": [
+                    "/payment"
+                ],
+                "summary": "Cancel Payment",
+                "description": "Cancel Payment",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Payment ID",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            }
+        },
+        "/payment/{id}": {
+            "get": {
+                "tags": [
+                    "/payment"
+                ],
+                "summary": "View Payment detail",
+                "description": "View Payment detail",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Payment ID",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            }
+        },
+        "/product": {
+            "get": {
+                "tags": [
+                    "/product"
+                ],
+                "summary": "List Product",
+                "description": "List Product",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "sku",
+                        "in": "query",
+                        "description": "Product Stock Keeping Unit",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Product Name",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit data",
+                        "required": true,
+                        "type": "number",
+                        "default": 10
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Limit data",
+                        "required": true,
+                        "type": "number",
+                        "default": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "/product"
+                ],
+                "summary": "Create new Product",
+                "description": "Create new Product",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "sku",
+                        "in": "formData",
+                        "description": "Product Stock Keeping Unit",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "formData",
+                        "description": "Product Name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "price",
+                        "in": "formData",
+                        "description": "Product Price",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "qty",
+                        "in": "formData",
+                        "description": "Product Quantity",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "desc",
+                        "in": "formData",
+                        "description": "Product Description",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            }
+        },
+        "/product/{id}": {
+            "get": {
+                "tags": [
+                    "/product"
+                ],
+                "summary": "View Product detail",
+                "description": "View Product detail",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Product ID",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "/product"
+                ],
+                "summary": "Update existing Product",
+                "description": "Update existing Product",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Product ID",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "name",
+                        "in": "formData",
+                        "description": "Product Name",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "price",
+                        "in": "formData",
+                        "description": "Product Price",
+                        "required": false,
+                        "type": "number"
+                    },
+                    {
+                        "name": "qty",
+                        "in": "formData",
+                        "description": "Product Quantity",
+                        "required": false,
+                        "type": "number"
+                    },
+                    {
+                        "name": "desc",
+                        "in": "formData",
+                        "description": "Product Description",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            }
+        },
+        "/product/{id}/status": {
+            "get": {
+                "tags": [
+                    "/product"
+                ],
+                "summary": "Change Product Status",
+                "description": "Change Product status",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Product ID",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            }
+        },
+        "/shippingCost": {
+            "get": {
+                "tags": [
+                    "/shippingCost"
+                ],
+                "summary": "List Shipping Cost",
+                "description": "List Shipping Cost",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "shipping_package_id",
+                        "in": "query",
+                        "description": "Package ID",
+                        "required": false,
+                        "type": "number"
+                    },
+                    {
+                        "name": "shipping_origin_province",
+                        "in": "query",
+                        "description": "Province Origin",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "shipping_origin_city",
+                        "in": "query",
+                        "description": "City Origin",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "shipping_origin_district",
+                        "in": "query",
+                        "description": "District Origin",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "shipping_destination_province",
+                        "in": "query",
+                        "description": "Province Destination",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "shipping_destination_city",
+                        "in": "query",
+                        "description": "Province City",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "shipping_destination_district",
+                        "in": "query",
+                        "description": "Province District",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "shipping_etd",
+                        "in": "query",
+                        "description": "Shipping Estimation Date",
+                        "required": false,
+                        "type": "number"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit data",
+                        "required": true,
+                        "type": "number",
+                        "default": 10
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Limit data",
+                        "required": true,
+                        "type": "number",
+                        "default": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "/shippingCost"
+                ],
+                "summary": "Create new Shipping Cost",
+                "description": "Create new Shipping Cost",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "shipping_package_id",
+                        "in": "formData",
+                        "description": "Package ID",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "shipping_origin_province",
+                        "in": "formData",
+                        "description": "Province Origin",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "shipping_origin_city",
+                        "in": "formData",
+                        "description": "City Origin",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "shipping_origin_district",
+                        "in": "formData",
+                        "description": "District Origin",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "shipping_destination_province",
+                        "in": "formData",
+                        "description": "Province Destination",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "shipping_destination_city",
+                        "in": "formData",
+                        "description": "Province City",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "shipping_destination_district",
+                        "in": "formData",
+                        "description": "Province District",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "shipping_etd",
+                        "in": "formData",
+                        "description": "Shipping Estimation Date",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "cost",
+                        "in": "formData",
+                        "description": "Shipping Estimation Date",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            }
+        },
+        "/shippingCost/{id}": {
+            "get": {
+                "tags": [
+                    "/shippingCost"
+                ],
+                "summary": "View Shipping Cost detail",
+                "description": "View Shipping Cost detail",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Cost ID",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "/shippingCost"
+                ],
+                "summary": "Update existing Shipping Cost",
+                "description": "Update existing Shipping Cost",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Cost ID",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "shipping_origin_province",
+                        "in": "formData",
+                        "description": "Province Origin",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "shipping_origin_city",
+                        "in": "formData",
+                        "description": "City Origin",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "shipping_origin_district",
+                        "in": "formData",
+                        "description": "District Origin",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "shipping_destination_province",
+                        "in": "formData",
+                        "description": "Province Destination",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "shipping_destination_city",
+                        "in": "formData",
+                        "description": "Province City",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "shipping_destination_district",
+                        "in": "formData",
+                        "description": "Province District",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "shipping_etd",
+                        "in": "formData",
+                        "description": "Shipping Estimation Date",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "cost",
+                        "in": "formData",
+                        "description": "Shipping Estimation Date",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "/shippingCost"
+                ],
+                "summary": "Delete existing Shipping Cost",
+                "description": "Delete existing Shipping Cost",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Cost ID",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            }
+        },
+        "/shippingCost/{id}/status": {
+            "get": {
+                "tags": [
+                    "/shippingPackage"
+                ],
+                "summary": "Change Shipping Cost Status",
+                "description": "Change Cost Status status",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Cost ID",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            }
+        },
+        "/shippingPackage": {
+            "get": {
+                "tags": [
+                    "/shippingPackage"
+                ],
+                "summary": "List Shipping Package",
+                "description": "List Shipping Package",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "code",
+                        "in": "query",
+                        "description": "Package Code",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "shipping_vendor_id",
+                        "in": "query",
+                        "description": "Vendor ID",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit data",
+                        "required": true,
+                        "type": "number",
+                        "default": 10
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Limit data",
+                        "required": true,
+                        "type": "number",
+                        "default": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "/shippingPackage"
+                ],
+                "summary": "Create new Shipping Package",
+                "description": "Create new Shipping Package",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "shipping_vendor_id",
+                        "in": "formData",
+                        "description": "Vendor ID",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "code",
+                        "in": "formData",
+                        "description": "Package Name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "description",
+                        "in": "formData",
+                        "description": "Description",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            }
+        },
+        "/shippingPackage/{id}": {
+            "get": {
+                "tags": [
+                    "/shippingPackage"
+                ],
+                "summary": "View Shipping Package detail",
+                "description": "View Shipping Package detail",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Package ID",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "/shippingPackage"
+                ],
+                "summary": "Update existing Shipping Package",
+                "description": "Update existing Shipping Package",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Package ID",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "code",
+                        "in": "formData",
+                        "description": "Package Name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "description",
+                        "in": "formData",
+                        "description": "Description",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "/shippingPackage"
+                ],
+                "summary": "Delete existing Shipping Package",
+                "description": "Delete existing Shipping Package",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Package ID",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            }
+        },
+        "/shippingPackage/{id}/status": {
+            "get": {
+                "tags": [
+                    "/shippingPackage"
+                ],
+                "summary": "Change Shipping Package Status",
+                "description": "Change Package Status status",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Package ID",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            }
+        },
+        "/shippingVendor": {
+            "get": {
+                "tags": [
+                    "/shippingVendor"
+                ],
+                "summary": "List Shipping Vendor",
+                "description": "List Shipping Vendor",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "User ID cart owner",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit data",
+                        "required": true,
+                        "type": "number",
+                        "default": 10
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Limit data",
+                        "required": true,
+                        "type": "number",
+                        "default": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "/shippingVendor"
+                ],
+                "summary": "Create new Shipping Vendor",
+                "description": "Create new Shipping Vendor",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "formData",
+                        "description": "Vendor Name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "track_url",
+                        "in": "formData",
+                        "description": "Tracking site URL",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "address",
+                        "in": "formData",
+                        "description": "Vendor Address",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "phone_number",
+                        "in": "formData",
+                        "description": "Vendor Phone",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "notes",
+                        "in": "formData",
+                        "description": "Notes",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            }
+        },
+        "/shippingVendor/{id}": {
+            "get": {
+                "tags": [
+                    "/shippingVendor"
+                ],
+                "summary": "View Shipping Vendor detail",
+                "description": "View Shipping Vendor detail",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Vendor ID",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "/shippingVendor"
+                ],
+                "summary": "Update existing Shipping Vendor",
+                "description": "Update existing Shipping Vendor",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Vendor ID",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "track_url",
+                        "in": "formData",
+                        "description": "Tracking site URL",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "address",
+                        "in": "formData",
+                        "description": "Vendor Address",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "phone_number",
+                        "in": "formData",
+                        "description": "Vendor Phone",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "notes",
+                        "in": "formData",
+                        "description": "Notes",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "/shippingVendor"
+                ],
+                "summary": "Delete existing Shipping Vendor",
+                "description": "Delete existing Shipping Vendor",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Vendor ID",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            }
+        },
+        "/shippingVendor/{id}/status": {
+            "get": {
+                "tags": [
+                    "/shippingVendor"
+                ],
+                "summary": "Change Shipping Vendor Status",
+                "description": "Change Vendor Status status",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Vendor ID",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation success"
+                    }
+                },
+                "security": [
+                    {
+                        "AccessToken": []
+                    }
+                ]
+            }
+        }
+    },
+    "definitions": {},
+    "securityDefinitions": {
+        "AccessToken": {
+            "type": "apiKey",
+            "name": "x-access-token",
+            "in": "header"
+        }
+    },
+    "tags": [
+        {
+            "name": "/product",
+            "description": "Product management"
+        },
+        {
+            "name": "/category",
+            "description": "Categories management"
+        },
+        {
+            "name": "/coupon",
+            "description": "Coupon management"
+        },
+        {
+            "name": "/cart",
+            "description": "Cart management"
+        },
+        {
+            "name": "/shippingVendor",
+            "description": "Shipping vendor management"
+        },
+        {
+            "name": "/shippingPackage",
+            "description": "Shipping package management"
+        },
+        {
+            "name": "/shippingCost",
+            "description": "Shipping cost management"
+        },
+        {
+            "name": "/order",
+            "description": "Order management"
+        },
+        {
+            "name": "/payment",
+            "description": "Payment management"
+        }
+    ]
+}

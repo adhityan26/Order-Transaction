@@ -6,7 +6,7 @@ class Cart extends BaseModel
 {
     protected $fillable = ['user_id', 'product_id', 'price', 'qty', 'sub_total'];
 
-    public function products()
+    public function product()
     {
         return $this->belongsTo(Product::class, 'product_id', 'id');
     }
@@ -20,7 +20,7 @@ class Cart extends BaseModel
             }
         }
 
-        $model->with("products");
+        $model->with("product");
 
         return $model->paginate($perPage, ['*'], "page", $page);
     }
@@ -46,6 +46,14 @@ class Cart extends BaseModel
         $data["price"] = $product->price;
         $data["sub_total"] = $product->price * intval($data["qty"]);
         return $model->create($data);
+    }
+
+    public static function removeCart($user, $id) {
+        $model = self::query()->where("user_id", $user->id)->where("id", $id)->first();
+        if (!$model) {
+            throw new AppException("Cart not found");
+        }
+        return $model->delete();
     }
 }
 ?>

@@ -9,6 +9,21 @@ class Order extends BaseModel
 {
     protected $fillable = ['order_number', 'user_id', 'email', 'phone_number', 'grand_total', 'shipping_cost', 'shipping_package_id', 'shipping_origin_province', 'shipping_origin_city', 'shipping_origin_district', 'shipping_destination_province', 'shipping_destination_city', 'shipping_destination_district', 'shipping_destination_address', 'coupon_id', 'discount_value', 'status', 'name', 'tracking_no'];
 
+    public function product()
+    {
+        return $this->belongsTo(Product::class, "product_id", "id");
+    }
+
+    public function coupon()
+    {
+        return $this->belongsTo(Coupon::class, "coupon_id", "id");
+    }
+
+    public function shippingPackage()
+    {
+        return $this->belongsTo(ShippingPackage::class, "shipping_package_id", "id");
+    }
+
     public static function getList($params = [], $page = 1, $perPage = 10, $searchColumn = []) {
         $model = self::query();
 
