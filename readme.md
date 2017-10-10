@@ -71,7 +71,7 @@ Buyer User Role :
 
 
 ### List Api Endpoint
-Api Documentation: [Order Transaction API Docs]()
+Api Documentation: [Order Transaction API Docs](http://l5-order-transaction.herokuapp.com/api/documentation)
 
 # Unit Test Result
 ### Test Result
