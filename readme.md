@@ -1,4 +1,12 @@
 # Order Transaction API
+This API is written on PHP using Lumen Framework.
+
+In order to work this API need following technology:
+* **[PHP]** - open source general-purpose scripting language that is especially suited for web development and can be embedded into HTML [PHP 7.1].
+* **[Lumen]** - a PHP micro-framework for building web applications with expressive, elegant syntax [lumen 5.5].
+* **[PHPunit]** - unit test for PHP [PHPUnit 6.4.1].
+* **[Swagger UI]** - Swagger UI is a collection of HTML, Javascript, and CSS assets that dynamically generate beautiful documentation from a Swagger-compliant API.
+* **[Heroku]** - A platform as a service (PaaS) that enables developers to build, run, and operate applications entirely in the cloud.
 
 ## Features
 This API cover order transaction for basic operation such as:
@@ -50,12 +58,12 @@ Rules Admin:
 * After Admin confirm the payment, Admin can change order status to Shipped and provide air way bill (tracking number) so user can track the shipment        
 
 ## User
-Prefix url: `{host}\/oAuth\/v1\/`
+Prefix url: `{host}/oAuth/v1/`
 
 For more information about login visit: [Lumen Rest oAuth 2.0](http://laravel-lumen-rest.dockerboxes.us/v1)
 
 ## Transaction
-Prefix url: `{host}\/api\/v1\/`
+Prefix url: `{host}/api/v1/`
 For demonstration visit: [Order Transaction API](http://l5-order-transaction.herokuapp.com)
 
 #### User Login
