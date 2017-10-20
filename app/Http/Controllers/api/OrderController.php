@@ -40,7 +40,7 @@ class OrderController extends Controller
      *     @SWG\Parameter(name="coupon_code", in="query", description="Product exist on cart", required=false, type="string"),
      *     @SWG\Parameter(name="limit", in="query", description="Limit data", required=true, type="number", default=10),
      *     @SWG\Parameter(name="page", in="query", description="Limit data", required=true, type="number", default=1),
-     *     @SWG\Response(response=200, description="Operation success")
+     *     @SWG\Response(response=200, description="Operation success"),
      *     security={
      *         {"AccessToken": {}}
      *     }
